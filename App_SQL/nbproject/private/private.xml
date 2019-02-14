@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="3"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/pasantilla/Proyecto%20Avance/ProyectoAvance/App_SQL/src/Forms/Login.java</file>
-            <file>file:/F:/pasantilla/Proyecto%20Avance/ProyectoAvance/App_SQL/src/Forms/MainForm.java</file>
-            <file>file:/F:/pasantilla/Proyecto%20Avance/ProyectoAvance/App_SQL/src/Forms/ListarTareas.java</file>
-            <file>file:/F:/pasantilla/Proyecto%20Avance/ProyectoAvance/App_SQL/src/Forms/Actualizar.java</file>
-            <file>file:/F:/pasantilla/Proyecto%20Avance/ProyectoAvance/App_SQL/src/Forms/ActualizarTarea.java</file>
+            <file>file:/F:/pasantía/Proyecto%20Gestor%20de%20Tareas/ProyectoAvance/App_SQL/src/Classes/Conexion.java</file>
+            <file>file:/F:/pasantía/Proyecto%20Gestor%20de%20Tareas/ProyectoAvance/App_SQL/src/Forms/Login.java</file>
+            <file>file:/F:/pasantía/Proyecto%20Gestor%20de%20Tareas/ProyectoAvance/App_SQL/src/Forms/ListarTareas.java</file>
+            <file>file:/F:/pasantía/Proyecto%20Gestor%20de%20Tareas/ProyectoAvance/App_SQL/src/Classes/Encryption.java</file>
+            <file>file:/F:/pasantía/Proyecto%20Gestor%20de%20Tareas/ProyectoAvance/App_SQL/src/Forms/Actualizar.java</file>
+            <file>file:/F:/pasantía/Proyecto%20Gestor%20de%20Tareas/ProyectoAvance/App_SQL/src/Forms/ActualizarTarea.java</file>
+            <file>file:/F:/pasantía/Proyecto%20Gestor%20de%20Tareas/ProyectoAvance/App_SQL/src/Forms/RegisterTarea.java</file>
         </group>
     </open-files>
 </project-private>

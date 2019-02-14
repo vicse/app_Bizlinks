@@ -41,10 +41,7 @@ public class RegisterInfoAdicional extends javax.swing.JDialog {
         impRegister = new gui.ImagePanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextAreaDes = new javax.swing.JTextArea();
         jTextFieldRes = new javax.swing.JTextField();
         jTextFieldSol = new javax.swing.JTextField();
 
@@ -153,10 +150,6 @@ public class RegisterInfoAdicional extends javax.swing.JDialog {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Responsable");
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Descripción");
-
         jButton3.setText("Guardar y Salir");
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -168,10 +161,6 @@ public class RegisterInfoAdicional extends javax.swing.JDialog {
                 jButton3ActionPerformed(evt);
             }
         });
-
-        jTextAreaDes.setColumns(20);
-        jTextAreaDes.setRows(5);
-        jScrollPane1.setViewportView(jTextAreaDes);
 
         jTextFieldRes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -186,22 +175,18 @@ public class RegisterInfoAdicional extends javax.swing.JDialog {
             .addGroup(impRegisterLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButton3)
-                        .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1)
+                    .addComponent(jButton3)
+                    .addGroup(impRegisterLayout.createSequentialGroup()
+                        .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(jTextFieldRes, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33)
+                        .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(impRegisterLayout.createSequentialGroup()
-                                .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jTextFieldRes, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(33, 33, 33)
-                                .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(impRegisterLayout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(69, 69, 69))
-                                    .addComponent(jTextFieldSol))))))
-                .addContainerGap(29, Short.MAX_VALUE))
+                                .addComponent(jLabel2)
+                                .addGap(69, 69, 69))
+                            .addComponent(jTextFieldSol))))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         impRegisterLayout.setVerticalGroup(
             impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,13 +199,9 @@ public class RegisterInfoAdicional extends javax.swing.JDialog {
                 .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldSol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addComponent(jLabel10)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(29, 29, 29)
                 .addComponent(jButton3)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -273,7 +254,6 @@ public class RegisterInfoAdicional extends javax.swing.JDialog {
         RegisterTarea tarea = new RegisterTarea(new javax.swing.JFrame(), true);
         RegisterTarea.setDato1(jTextFieldRes.getText());
         RegisterTarea.setDato2(jTextFieldSol.getText());
-        RegisterTarea.setDato3(jTextAreaDes.getText());
         this.dispose();
         
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -361,12 +341,9 @@ public class RegisterInfoAdicional extends javax.swing.JDialog {
     private gui.ImagePanel impRegister;
     private gui.ImagePanel ipmLogoLeft;
     private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextAreaDes;
     private javax.swing.JTextField jTextFieldRes;
     private javax.swing.JTextField jTextFieldSol;
     private javax.swing.JPanel jpControl;

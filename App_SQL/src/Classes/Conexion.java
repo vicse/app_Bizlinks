@@ -22,7 +22,7 @@ public class Conexion {
     String  BaseDatos="atenea",            
             Url="jdbc:postgresql://172.19.71.3:5432/"+BaseDatos,
             Usuario="dbadmin",
-            Contraseña="dbmast2020+";
+            Contraseña="dbmast2019+";
     
     //Creando un metodo con una variable Connection para la conexion 
     

@@ -88,7 +88,7 @@ public class RegisterTarea extends javax.swing.JDialog {
             //Verificamos si la infoAdicional esta vacia y realizamos el registro con los campos en null
             
             if("".equals(getDato1()) || "".equals(getDato2()) || "".equals(getDato3())){
-                PreparedStatement ps = con.getConnection().prepareStatement("INSERT INTO dbo.tareas_emp (tarea,fecha_entrega,adjunto,responsable,solicitado,descripcion,nombre_etapa,nombre_proyecto,nombre_prioridad,nombre_producto,nombre_estado) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+                PreparedStatement ps = con.getConnection().prepareStatement("INSERT INTO dbo.tareas_emp (tarea,fecha_entrega,adjunto,responsable,solicitado,nombre_etapa,nombre_proyecto,nombre_prioridad,nombre_producto,nombre_estado) VALUES (?,?,?,?,?,?,?,?,?,?)");
             
                 sqlDate = new Date(jDateChooser.getDate().getTime());
 
@@ -97,17 +97,16 @@ public class RegisterTarea extends javax.swing.JDialog {
                 ps.setString(3, filename);
                 ps.setString(4, null);
                 ps.setString(5,null);
-                ps.setString(6,null);
-                ps.setInt(7, indexEtapa);
-                ps.setInt(8, indexProyecto);
-                ps.setInt(9, indexPrioridad);
-                ps.setInt(10, indexProducto);
-                ps.setInt(11, indexEstado);
+                ps.setInt(6, indexEtapa);
+                ps.setInt(7, indexProyecto);
+                ps.setInt(8, indexPrioridad);
+                ps.setInt(9, indexProducto);
+                ps.setInt(10, indexEstado);
 
                 ps.execute();
                 JOptionPane.showMessageDialog(null, "Tarea registrada con éxito");
             }else{
-                PreparedStatement ps = con.getConnection().prepareStatement("INSERT INTO dbo.tareas_emp (tarea,fecha_entrega,adjunto,responsable,solicitado,descripcion,nombre_etapa,nombre_proyecto,nombre_prioridad,nombre_producto,nombre_estado) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+                PreparedStatement ps = con.getConnection().prepareStatement("INSERT INTO dbo.tareas_emp (tarea,fecha_entrega,adjunto,responsable,solicitado,nombre_etapa,nombre_proyecto,nombre_prioridad,nombre_producto,nombre_estado) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
             
                 sqlDate = new Date(jDateChooser.getDate().getTime());
 
@@ -116,12 +115,11 @@ public class RegisterTarea extends javax.swing.JDialog {
                 ps.setString(3, filename);
                 ps.setString(4, getDato1());
                 ps.setString(5, getDato2());
-                ps.setString(6,getDato3());
-                ps.setInt(7, indexEtapa);
-                ps.setInt(8, indexProyecto);
-                ps.setInt(9, indexPrioridad);
-                ps.setInt(10, indexProducto);
-                ps.setInt(11, indexEstado);
+                ps.setInt(6, indexEtapa);
+                ps.setInt(7, indexProyecto);
+                ps.setInt(8, indexPrioridad);
+                ps.setInt(9, indexProducto);
+                ps.setInt(10, indexEstado);
 
                 ps.execute();
                 JOptionPane.showMessageDialog(null, "Tarea registrada con éxito");
@@ -617,12 +615,31 @@ public class RegisterTarea extends javax.swing.JDialog {
     }//GEN-LAST:event_ComboBoxProyectoActionPerformed
 
     private void btnRegistrarTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarTareaActionPerformed
-        if("".equals(jTextFieldTarea.getText())){
+        if(jCheckBox1.isSelected()){
+            if("".equals(jTextFieldTarea.getText())){
             JOptionPane.showMessageDialog(this, " No puede dejar Campos Vacios \n Verifique e intente de Nuevo ");
-        }else{   
-            registroTarea();
-            this.dispose();
+            }else{   
+                registroTarea();
+                ComboBoxProyecto.setSelectedIndex(0);
+                ComboBoxEstado.setSelectedIndex(0);
+                ComboBoxEtapa.setSelectedIndex(0);
+                ComboBoxProducto.setSelectedIndex(0);
+                ComboBoxPrioridad.setSelectedIndex(0);
+                jTextFieldTarea.setText("");
+                jDateChooser.setDate(null);
+                jLabelRes.setText("");
+                jLabelSol.setText("");
+                txtAdjuntoName.setText("");
+            }
+        }else{
+            if("".equals(jTextFieldTarea.getText())){
+            JOptionPane.showMessageDialog(this, " No puede dejar Campos Vacios \n Verifique e intente de Nuevo ");
+            }else{   
+                registroTarea();
+                this.dispose();
+            }
         }
+        
     }//GEN-LAST:event_btnRegistrarTareaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

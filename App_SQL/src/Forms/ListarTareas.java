@@ -52,7 +52,7 @@ public class ListarTareas extends javax.swing.JFrame {
         impLista.setImage(new ImageIcon(getClass().getResource("/Resources/Titles.png")).getImage());
         ipmLogoLeft.setImage(new ImageIcon(getClass().getResource("/Resources/icon_250.png")).getImage());
         imp_main.setImage(new ImageIcon(getClass().getResource("/Resources/fond_main.png")).getImage());
-        String[] columns = new String[]{"ID", "PROYECTO", "PRODUCTO", "TAREA","ETAPA", "ASIGNADO", "ESTADO", "PRIORIDAD","SOLICITADO","DESCRIPCIÓN","ENTREGA","ADJUNTO"};
+        String[] columns = new String[]{"ID", "PROYECTO", "PRODUCTO", "TAREA","ETAPA", "ASIGNADO", "ESTADO", "PRIORIDAD","SOLICITADO","ENTREGA","ADJUNTO"};
         ModeloTablaConsulta.setColumnIdentifiers(columns);
         tbTablaConsulta.setModel(ModeloTablaConsulta);
         StyleTable();
@@ -83,7 +83,6 @@ public class ListarTareas extends javax.swing.JFrame {
             ", estado_tarea.estado\n" +
             ", prioridad_tarea.prioridad\n" +
             ", COALESCE(solicitado, '')\n" +
-            ", COALESCE(descripcion, '')\n" +
             ", fecha_entrega\n" +
             ", adjunto FROM "+table+
             " INNER JOIN "+t2+" ON "+t2+".id_proyecto="+table+".nombre_proyecto"+
@@ -108,6 +107,20 @@ public class ListarTareas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error de Conexion: "+ e.getMessage());
         }
     }
+    
+    //Metodo para elimiar una tarea
+    public void Delete(String table,String id){
+        try{
+            PreparedStatement ps = con.getConnection().prepareStatement("DELETE FROM " + table + " WHERE id_tarea=" +id);
+            ps.execute();
+            
+            JOptionPane.showMessageDialog(this, "Borrado Exitosamente", "Proceso Culminado", JOptionPane.INFORMATION_MESSAGE);
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error de conexion:" + e.getMessage());
+        }
+    }
+    
     
     //meetodos para rellenar los comboBox de busqueda
     private void FillComboPrioridad(){
@@ -209,7 +222,6 @@ public class ListarTareas extends javax.swing.JFrame {
             ", estado_tarea.estado\n" +
             ", prioridad_tarea.prioridad\n" +
             ", COALESCE(solicitado, '')\n" +
-            ", COALESCE(descripcion, '')\n" +
             ", fecha_entrega\n" +
             ", adjunto FROM "+table+
             " INNER JOIN "+t2+" ON "+t2+".id_proyecto="+table+".nombre_proyecto"+
@@ -293,6 +305,7 @@ public class ListarTareas extends javax.swing.JFrame {
         btnActualizar = new javax.swing.JButton();
         btnRecargar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         impBusquedaEmpresa = new gui.ImagePanel();
         jLabel2 = new javax.swing.JLabel();
         impLista = new gui.ImagePanel();
@@ -441,7 +454,7 @@ public class ListarTareas extends javax.swing.JFrame {
         btnActualizar.setBackground(new java.awt.Color(255, 102, 102));
         btnActualizar.setForeground(new java.awt.Color(255, 255, 255));
         btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/update.png"))); // NOI18N
-        btnActualizar.setText("Modificar Fila");
+        btnActualizar.setText("Modificar Tarea");
         btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -474,6 +487,17 @@ public class ListarTareas extends javax.swing.JFrame {
             }
         });
 
+        btnEliminar.setBackground(new java.awt.Color(255, 102, 102));
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/update.png"))); // NOI18N
+        btnEliminar.setText("Eliminar Tarea");
+        btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -481,11 +505,13 @@ public class ListarTareas extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(18, 18, 18)
+                .addComponent(btnEliminar)
+                .addGap(18, 18, 18)
                 .addComponent(btnActualizar)
                 .addGap(18, 18, 18)
                 .addComponent(btnRecargar)
-                .addGap(18, 18, 18))
+                .addGap(30, 30, 30))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -494,7 +520,8 @@ public class ListarTareas extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRecargar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -546,7 +573,7 @@ public class ListarTareas extends javax.swing.JFrame {
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(imp_mainLayout.createSequentialGroup()
                 .addComponent(impLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 14, Short.MAX_VALUE))
         );
         imp_mainLayout.setVerticalGroup(
             imp_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1145,6 +1172,18 @@ public class ListarTareas extends javax.swing.JFrame {
         filterEstado = jComboBoxFestado.getSelectedItem().toString();              
     }//GEN-LAST:event_jComboBoxFestadoActionPerformed
 
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int fila = tbTablaConsulta.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Primero Seleccine una fila");
+        } else {
+            int i = JOptionPane.showConfirmDialog(this, "Seguro de eliminar estos datos?", "Confirmar Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(i==0){
+                Delete("dbo.tareas_emp", tbTablaConsulta.getValueAt(fila, 0).toString());
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1186,6 +1225,7 @@ public class ListarTareas extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnBuscar1;
     private javax.swing.JLabel btnClose;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JLabel btnMinimize;
