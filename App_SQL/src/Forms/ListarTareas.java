@@ -52,7 +52,7 @@ public class ListarTareas extends javax.swing.JFrame {
         impLista.setImage(new ImageIcon(getClass().getResource("/Resources/Titles.png")).getImage());
         ipmLogoLeft.setImage(new ImageIcon(getClass().getResource("/Resources/icon_250.png")).getImage());
         imp_main.setImage(new ImageIcon(getClass().getResource("/Resources/fond_main.png")).getImage());
-        String[] columns = new String[]{"ID", "TIPO_ACTIVIDAD", "PRODUCTO", "DETALLE ACTIVIDAD","ETAPA", "ASIGNADO", "ESTADO", "PRIORIDAD","SOLICITADO","ENTREGA","ADJUNTO"};
+        String[] columns = new String[]{"ID", "TIPO_ACTIVIDAD", "PRODUCTO", "DETALLE ACTIVIDAD","ETAPA", "ASIGNADO", "ESTADO", "PRIORIDAD","SOLICITADO","ENTREGA"};
         ModeloTablaConsulta.setColumnIdentifiers(columns);
         tbTablaConsulta.setModel(ModeloTablaConsulta);
         StyleTable();
@@ -83,8 +83,7 @@ public class ListarTareas extends javax.swing.JFrame {
             ", estado_tarea.estado\n" +
             ", prioridad_tarea.prioridad\n" +
             ", COALESCE(solicitado, '')\n" +
-            ", fecha_entrega\n" +
-            ", adjunto FROM "+table+
+            ", fecha_entrega FROM "+table+
             " INNER JOIN "+t2+" ON "+t2+".id_tipo_actividad="+table+".nombre_tipo_actividad"+
             " INNER JOIN "+t3+" ON "+t3+".id_producto="+table+".nombre_producto"+
             " INNER JOIN "+t4+" ON "+t4+".id_etapa="+table+".nombre_etapa"+
@@ -222,8 +221,7 @@ public class ListarTareas extends javax.swing.JFrame {
             ", estado_tarea.estado\n" +
             ", prioridad_tarea.prioridad\n" +
             ", COALESCE(solicitado, '')\n" +
-            ", fecha_entrega\n" +
-            ", adjunto FROM "+table+
+            ", fecha_entrega FROM "+table+
             " INNER JOIN "+t2+" ON "+t2+".id_tipo_actividad="+table+".nombre_tipo_actividad"+
             " INNER JOIN "+t3+" ON "+t3+".id_producto="+table+".nombre_producto"+
             " INNER JOIN "+t4+" ON "+t4+".id_etapa="+table+".nombre_etapa"+
