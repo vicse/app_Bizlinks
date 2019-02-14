@@ -52,13 +52,13 @@ public class ListarTareas extends javax.swing.JFrame {
         impLista.setImage(new ImageIcon(getClass().getResource("/Resources/Titles.png")).getImage());
         ipmLogoLeft.setImage(new ImageIcon(getClass().getResource("/Resources/icon_250.png")).getImage());
         imp_main.setImage(new ImageIcon(getClass().getResource("/Resources/fond_main.png")).getImage());
-        String[] columns = new String[]{"ID", "PROYECTO", "PRODUCTO", "TAREA","ETAPA", "ASIGNADO", "ESTADO", "PRIORIDAD","SOLICITADO","ENTREGA","ADJUNTO"};
+        String[] columns = new String[]{"ID", "TIPO_ACTIVIDAD", "PRODUCTO", "DETALLE ACTIVIDAD","ETAPA", "ASIGNADO", "ESTADO", "PRIORIDAD","SOLICITADO","ENTREGA","ADJUNTO"};
         ModeloTablaConsulta.setColumnIdentifiers(columns);
         tbTablaConsulta.setModel(ModeloTablaConsulta);
         StyleTable();
         Shape redondear = new RoundRectangle2D.Double(0, 0, this.getBounds().width, this.getBounds().height, 6, 6);
         AWTUtilities.setWindowShape(this, redondear);       
-        LoadData("dbo.tareas_emp","dbo.proyecto","dbo.producto","dbo.etapa_tarea","dbo.estado_tarea","dbo.prioridad_tarea");        
+        LoadData("dbo.tareas_emp","dbo.tipo_actividad","dbo.producto","dbo.etapa_tarea","dbo.estado_tarea","dbo.prioridad_tarea");        
     }
     
     /*--------------------------------FUNCIONES-----------------------------------------*/
@@ -75,9 +75,9 @@ public class ListarTareas extends javax.swing.JFrame {
         CleanData();
         try {
             PreparedStatement ps = con.getConnection().prepareStatement("Select id_tarea\n" +
-            ", proyecto.proyecto\n" +
+            ", tipo_actividad.tipo_actividad\n" +
             ", producto.producto\n" +
-            ", tarea\n" +
+            ", detalle_actividad\n" +
             ", etapa_tarea.etapa\n" +
             ", COALESCE(responsable, '')\n" +
             ", estado_tarea.estado\n" +
@@ -85,7 +85,7 @@ public class ListarTareas extends javax.swing.JFrame {
             ", COALESCE(solicitado, '')\n" +
             ", fecha_entrega\n" +
             ", adjunto FROM "+table+
-            " INNER JOIN "+t2+" ON "+t2+".id_proyecto="+table+".nombre_proyecto"+
+            " INNER JOIN "+t2+" ON "+t2+".id_tipo_actividad="+table+".nombre_tipo_actividad"+
             " INNER JOIN "+t3+" ON "+t3+".id_producto="+table+".nombre_producto"+
             " INNER JOIN "+t4+" ON "+t4+".id_etapa="+table+".nombre_etapa"+
             " INNER JOIN "+t5+" ON "+t5+".id_estado="+table+".nombre_estado"+
@@ -214,9 +214,9 @@ public class ListarTareas extends javax.swing.JFrame {
         try {
             
             PreparedStatement psm = con.getConnection().prepareStatement("Select id_tarea\n" +
-            ", proyecto.proyecto\n" +
+            ", tipo_actividad.tipo_actividad\n" +
             ", producto.producto\n" +
-            ", tarea\n" +
+            ", detalle_actividad\n" +
             ", etapa_tarea.etapa\n" +
             ", COALESCE(responsable, '')\n" +
             ", estado_tarea.estado\n" +
@@ -224,7 +224,7 @@ public class ListarTareas extends javax.swing.JFrame {
             ", COALESCE(solicitado, '')\n" +
             ", fecha_entrega\n" +
             ", adjunto FROM "+table+
-            " INNER JOIN "+t2+" ON "+t2+".id_proyecto="+table+".nombre_proyecto"+
+            " INNER JOIN "+t2+" ON "+t2+".id_tipo_actividad="+table+".nombre_tipo_actividad"+
             " INNER JOIN "+t3+" ON "+t3+".id_producto="+table+".nombre_producto"+
             " INNER JOIN "+t4+" ON "+t4+".id_etapa="+table+".nombre_etapa"+
             " INNER JOIN "+t5+" ON "+t5+".id_estado="+table+".nombre_estado"+
@@ -1119,18 +1119,18 @@ public class ListarTareas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnRecargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarActionPerformed
-        LoadData("dbo.tareas_emp","dbo.proyecto","dbo.producto","dbo.etapa_tarea","dbo.estado_tarea","dbo.prioridad_tarea");
+        LoadData("dbo.tareas_emp","dbo.tipo_actividad","dbo.producto","dbo.etapa_tarea","dbo.estado_tarea","dbo.prioridad_tarea");
         jComboBoxFestado.setSelectedIndex(0);
         jComboBoxFprioridad.setSelectedIndex(0);
     }//GEN-LAST:event_btnRecargarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        FilterDB("dbo.tareas_emp","dbo.proyecto","dbo.producto","dbo.etapa_tarea","dbo.estado_tarea","dbo.prioridad_tarea","prioridad_tarea.prioridad", filterPrioridad);
+        FilterDB("dbo.tareas_emp","dbo.tipo_actividad","dbo.producto","dbo.etapa_tarea","dbo.estado_tarea","dbo.prioridad_tarea","prioridad_tarea.prioridad", filterPrioridad);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
 
-        FilterDB("dbo.tareas_emp","dbo.proyecto","dbo.producto","dbo.etapa_tarea","dbo.estado_tarea","dbo.prioridad_tarea","estado_tarea.estado", filterEstado);
+        FilterDB("dbo.tareas_emp","dbo.tipo_actividad","dbo.producto","dbo.etapa_tarea","dbo.estado_tarea","dbo.prioridad_tarea","estado_tarea.estado", filterEstado);
     }//GEN-LAST:event_btnBuscar1ActionPerformed
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked

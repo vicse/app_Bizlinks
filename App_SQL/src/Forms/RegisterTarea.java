@@ -88,7 +88,7 @@ public class RegisterTarea extends javax.swing.JDialog {
             //Verificamos si la infoAdicional esta vacia y realizamos el registro con los campos en null
             
             if("".equals(getDato1()) || "".equals(getDato2()) || "".equals(getDato3())){
-                PreparedStatement ps = con.getConnection().prepareStatement("INSERT INTO dbo.tareas_emp (tarea,fecha_entrega,adjunto,responsable,solicitado,nombre_etapa,nombre_proyecto,nombre_prioridad,nombre_producto,nombre_estado) VALUES (?,?,?,?,?,?,?,?,?,?)");
+                PreparedStatement ps = con.getConnection().prepareStatement("INSERT INTO dbo.tareas_emp (detalle_actividad,fecha_entrega,adjunto,responsable,solicitado,nombre_etapa,nombre_proyecto,nombre_prioridad,nombre_producto,nombre_estado) VALUES (?,?,?,?,?,?,?,?,?,?)");
             
                 sqlDate = new Date(jDateChooser.getDate().getTime());
 
@@ -106,7 +106,7 @@ public class RegisterTarea extends javax.swing.JDialog {
                 ps.execute();
                 JOptionPane.showMessageDialog(null, "Tarea registrada con éxito");
             }else{
-                PreparedStatement ps = con.getConnection().prepareStatement("INSERT INTO dbo.tareas_emp (tarea,fecha_entrega,adjunto,responsable,solicitado,nombre_etapa,nombre_proyecto,nombre_prioridad,nombre_producto,nombre_estado) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+                PreparedStatement ps = con.getConnection().prepareStatement("INSERT INTO dbo.tareas_emp (detalle_actividad,fecha_entrega,adjunto,responsable,solicitado,nombre_etapa,nombre_proyecto,nombre_prioridad,nombre_producto,nombre_estado) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
             
                 sqlDate = new Date(jDateChooser.getDate().getTime());
 
@@ -354,14 +354,14 @@ public class RegisterTarea extends javax.swing.JDialog {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Proyecto *");
 
-        ComboBoxProyecto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar Proyecto" }));
+        ComboBoxProyecto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar Proyecto--" }));
         ComboBoxProyecto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboBoxProyectoActionPerformed(evt);
             }
         });
 
-        ComboBoxProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar Producto" }));
+        ComboBoxProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar Producto--" }));
         ComboBoxProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboBoxProductoActionPerformed(evt);
@@ -370,13 +370,13 @@ public class RegisterTarea extends javax.swing.JDialog {
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Nombre de la tarea *");
+        jLabel10.setText("Detalle de la actividad*");
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Etapa *");
 
-        ComboBoxEtapa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar Etapa" }));
+        ComboBoxEtapa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar Etapa--" }));
         ComboBoxEtapa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboBoxEtapaActionPerformed(evt);
@@ -387,7 +387,7 @@ public class RegisterTarea extends javax.swing.JDialog {
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Prioridad *");
 
-        ComboBoxPrioridad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar Prioridad" }));
+        ComboBoxPrioridad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar Prioridad--" }));
         ComboBoxPrioridad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboBoxPrioridadActionPerformed(evt);
@@ -430,7 +430,7 @@ public class RegisterTarea extends javax.swing.JDialog {
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Estado *");
 
-        ComboBoxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar Estado" }));
+        ComboBoxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar Estado--" }));
         ComboBoxEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboBoxEstadoActionPerformed(evt);
@@ -555,8 +555,7 @@ public class RegisterTarea extends javax.swing.JDialog {
                         .addGap(8, 8, 8)
                         .addComponent(jLabelRes)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelSol)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabelSol)))
                 .addGap(12, 12, 12)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
