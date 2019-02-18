@@ -7,28 +7,21 @@ import com.sun.awt.AWTUtilities;
 import java.awt.HeadlessException;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
-import java.io.File;
-import java.io.FileInputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Calendar;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 public class RegisterTarea extends javax.swing.JDialog {
     
     private static String dato1;
     private static String dato2;
     private static String dato3;
-    Date sqlDate;     
-    
+    Date sqlDate,fechaFinal;     
+    String periodoDe;
     Funciones funciones = new Funciones();
     Conexion con = new Conexion();
     String solicitado,respon,descrip;
@@ -91,10 +84,10 @@ public class RegisterTarea extends javax.swing.JDialog {
             //Verificamos si la infoAdicional esta vacia y realizamos el registro con los campos en null
             
             if("".equals(getDato1()) || "".equals(getDato2()) || "".equals(getDato3())){
-                PreparedStatement ps = con.getConnection().prepareStatement("INSERT INTO dbo.tareas_emp (detalle_actividad,fecha_entrega,responsable,solicitado,nombre_etapa,nombre_tipo_actividad,nombre_prioridad,nombre_producto,nombre_estado,nombre_tipo_dia,nombre_act_asoc_cliente,razon_social_cliente,detalle_nuevo_producto,numero_horas) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                PreparedStatement ps = con.getConnection().prepareStatement("INSERT INTO dbo.tareas_emp (detalle_actividad,fecha_entrega,responsable,solicitado,nombre_etapa,nombre_tipo_actividad,nombre_prioridad,nombre_producto,nombre_estado,nombre_tipo_dia,nombre_act_asoc_cliente,razon_social_cliente,detalle_nuevo_producto,numero_horas,periodo_declarar) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             
                 sqlDate = new Date(jDateChooser.getDate().getTime());
-
+                
                 ps.setString(1, jTextFieldDetaAct.getText());
                 ps.setDate(2, sqlDate);
                 ps.setString(3, null);
@@ -109,11 +102,12 @@ public class RegisterTarea extends javax.swing.JDialog {
                 ps.setString(12, jTextFieldRazonSocCli.getText());
                 ps.setString(13, jTextFieldDetaNvoPro.getText());
                 ps.setString(14, jTextFieldNroHoras.getText());
+                ps.setString(15, CapturarFecha(sqlDate));
 
                 ps.execute();
                 JOptionPane.showMessageDialog(null, "Tarea registrada con éxito");
             }else{
-                PreparedStatement ps = con.getConnection().prepareStatement("INSERT INTO dbo.tareas_emp (detalle_actividad,fecha_entrega,responsable,solicitado,nombre_etapa,nombre_tipo_actividad,nombre_prioridad,nombre_producto,nombre_estado,nombre_tipo_dia,nombre_act_asoc_cliente,razon_social_cliente,detalle_nuevo_producto,numero_horas) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                PreparedStatement ps = con.getConnection().prepareStatement("INSERT INTO dbo.tareas_emp (detalle_actividad,fecha_entrega,responsable,solicitado,nombre_etapa,nombre_tipo_actividad,nombre_prioridad,nombre_producto,nombre_estado,nombre_tipo_dia,nombre_act_asoc_cliente,razon_social_cliente,detalle_nuevo_producto,numero_horas,periodo_declarar) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             
                 sqlDate = new Date(jDateChooser.getDate().getTime());
 
@@ -131,6 +125,7 @@ public class RegisterTarea extends javax.swing.JDialog {
                 ps.setString(12, jTextFieldRazonSocCli.getText());
                 ps.setString(13, jTextFieldDetaNvoPro.getText());
                 ps.setString(14, jTextFieldNroHoras.getText());
+                ps.setString(15, CapturarFecha(sqlDate));
 
                 ps.execute();
                 JOptionPane.showMessageDialog(null, "Tarea registrada con éxito");
@@ -141,7 +136,21 @@ public class RegisterTarea extends javax.swing.JDialog {
             System.out.println("ERROR EN LA INSERCION: "+e);
         }
     }
-      
+    
+    public String CapturarFecha(Date fecha){
+        
+        try{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM-yyyy");
+            periodoDe = dateFormat.format(fecha);
+            
+            return periodoDe;
+        
+        }catch(NullPointerException e){
+            System.out.println(e);
+            return "Error: "+e;
+        }
+       
+    }
     
     //Cargar los datos en el combo box de la base de datos Tabla Proyecto
     
