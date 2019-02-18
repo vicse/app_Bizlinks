@@ -33,7 +33,7 @@ public class RegisterTarea extends javax.swing.JDialog {
     Conexion con = new Conexion();
     String solicitado,respon,descrip;
     //Variable donde se guardará el archivo adjunto
-    private int indexProyecto,indexProducto,indexEtapa,indexEstado,indexPrioridad;
+    private int indexTipoActividad,indexProducto,indexEtapa,indexEstado,indexPrioridad,indexTipoDia,indexActAscCli;
     String filename;
 
     public static String getDato1() {
@@ -91,36 +91,46 @@ public class RegisterTarea extends javax.swing.JDialog {
             //Verificamos si la infoAdicional esta vacia y realizamos el registro con los campos en null
             
             if("".equals(getDato1()) || "".equals(getDato2()) || "".equals(getDato3())){
-                PreparedStatement ps = con.getConnection().prepareStatement("INSERT INTO dbo.tareas_emp (detalle_actividad,fecha_entrega,responsable,solicitado,nombre_etapa,nombre_proyecto,nombre_prioridad,nombre_producto,nombre_estado) VALUES (?,?,?,?,?,?,?,?,?)");
+                PreparedStatement ps = con.getConnection().prepareStatement("INSERT INTO dbo.tareas_emp (detalle_actividad,fecha_entrega,responsable,solicitado,nombre_etapa,nombre_tipo_actividad,nombre_prioridad,nombre_producto,nombre_estado,nombre_tipo_dia,nombre_act_asoc_cliente,razon_social_cliente,detalle_nuevo_producto,numero_horas) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             
                 sqlDate = new Date(jDateChooser.getDate().getTime());
 
-                ps.setString(1, jTextFieldTarea.getText());
+                ps.setString(1, jTextFieldDetaAct.getText());
                 ps.setDate(2, sqlDate);
                 ps.setString(3, null);
                 ps.setString(4,null);
                 ps.setInt(5, indexEtapa);
-                ps.setInt(6, indexProyecto);
+                ps.setInt(6, indexTipoActividad);
                 ps.setInt(7, indexPrioridad);
                 ps.setInt(8, indexProducto);
                 ps.setInt(9, indexEstado);
+                ps.setInt(10, indexTipoDia);
+                ps.setInt(11, indexActAscCli);
+                ps.setString(12, jTextFieldRazonSocCli.getText());
+                ps.setString(13, jTextFieldDetaNvoPro.getText());
+                ps.setString(14, jTextFieldNroHoras.getText());
 
                 ps.execute();
                 JOptionPane.showMessageDialog(null, "Tarea registrada con éxito");
             }else{
-                PreparedStatement ps = con.getConnection().prepareStatement("INSERT INTO dbo.tareas_emp (detalle_actividad,fecha_entrega,responsable,solicitado,nombre_etapa,nombre_proyecto,nombre_prioridad,nombre_producto,nombre_estado) VALUES (?,?,?,?,?,?,?,?,?,?)");
+                PreparedStatement ps = con.getConnection().prepareStatement("INSERT INTO dbo.tareas_emp (detalle_actividad,fecha_entrega,responsable,solicitado,nombre_etapa,nombre_tipo_actividad,nombre_prioridad,nombre_producto,nombre_estado,nombre_tipo_dia,nombre_act_asoc_cliente,razon_social_cliente,detalle_nuevo_producto,numero_horas) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             
                 sqlDate = new Date(jDateChooser.getDate().getTime());
 
-                ps.setString(1, jTextFieldTarea.getText());
+                ps.setString(1, jTextFieldDetaNvoPro.getText());
                 ps.setDate(2, sqlDate);
                 ps.setString(3, getDato1());
                 ps.setString(4, getDato2());
                 ps.setInt(5, indexEtapa);
-                ps.setInt(6, indexProyecto);
+                ps.setInt(6, indexTipoActividad);
                 ps.setInt(7, indexPrioridad);
                 ps.setInt(8, indexProducto);
                 ps.setInt(9, indexEstado);
+                ps.setInt(10, indexTipoDia);
+                ps.setInt(11, indexActAscCli);
+                ps.setString(12, jTextFieldRazonSocCli.getText());
+                ps.setString(13, jTextFieldDetaNvoPro.getText());
+                ps.setString(14, jTextFieldNroHoras.getText());
 
                 ps.execute();
                 JOptionPane.showMessageDialog(null, "Tarea registrada con éxito");
@@ -255,7 +265,7 @@ public class RegisterTarea extends javax.swing.JDialog {
         ComboBoxTipoActividad = new javax.swing.JComboBox<>();
         ComboBoxProducto = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
-        jTextFieldTarea = new javax.swing.JTextField();
+        jTextFieldDetaNvoPro = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         ComboBoxEtapa = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
@@ -272,11 +282,11 @@ public class RegisterTarea extends javax.swing.JDialog {
         jLabelRes = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldNroHoras = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        jTextFieldTarea1 = new javax.swing.JTextField();
+        jTextFieldDetaAct = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
-        jTextFieldTarea2 = new javax.swing.JTextField();
+        jTextFieldRazonSocCli = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jComboBoxActAscCli = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
@@ -495,9 +505,9 @@ public class RegisterTarea extends javax.swing.JDialog {
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("Detalle de la actividad*");
 
-        jTextFieldTarea1.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldDetaAct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldTarea1ActionPerformed(evt);
+                jTextFieldDetaActActionPerformed(evt);
             }
         });
 
@@ -510,12 +520,22 @@ public class RegisterTarea extends javax.swing.JDialog {
         jLabel3.setText("Tipo de día");
 
         jComboBoxActAscCli.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar act asc a cli--" }));
+        jComboBoxActAscCli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxActAscCliActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Act. Asoc. A Cliente");
 
         jComboBoxTipoDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar tipo de dia--" }));
+        jComboBoxTipoDia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxTipoDiaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout impRegisterLayout = new javax.swing.GroupLayout(impRegister);
         impRegister.setLayout(impRegisterLayout);
@@ -564,17 +584,17 @@ public class RegisterTarea extends javax.swing.JDialog {
                                                         .addComponent(jButton1)
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                         .addComponent(jButton4))
-                                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jTextFieldNroHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addComponent(ComboBoxPrioridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addComponent(jLabel13))
-                                                .addGap(0, 5, Short.MAX_VALUE))))
+                                                .addGap(0, 0, Short.MAX_VALUE))))
                                     .addComponent(jLabel10))
-                                .addContainerGap(68, Short.MAX_VALUE))))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, impRegisterLayout.createSequentialGroup()
                         .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldTarea1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldDetaAct, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(impRegisterLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jCheckBox1)
@@ -582,53 +602,51 @@ public class RegisterTarea extends javax.swing.JDialog {
                                 .addComponent(btnRegistrarTarea)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton3))
-                            .addComponent(jTextFieldTarea, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldDetaNvoPro, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(impRegisterLayout.createSequentialGroup()
                                 .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(impRegisterLayout.createSequentialGroup()
                                         .addGap(1, 1, 1)
                                         .addComponent(jLabel2))
                                     .addComponent(jComboBoxActAscCli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextFieldTarea2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(129, 129, 129)
+                                .addComponent(jTextFieldRazonSocCli, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(22, 22, 22))))
         );
         impRegisterLayout.setVerticalGroup(
             impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(impRegisterLayout.createSequentialGroup()
-                .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(impRegisterLayout.createSequentialGroup()
-                        .addGap(88, 88, 88)
-                        .addComponent(jLabel18)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldTarea2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(impRegisterLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel11))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ComboBoxTipoActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBoxTipoDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBoxActAscCli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(4, 4, 4)
+                .addContainerGap()
+                .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ComboBoxTipoActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxTipoDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel18))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxActAscCli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldRazonSocCli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ComboBoxProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextFieldTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldDetaNvoPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextFieldTarea1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldDetaAct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(impRegisterLayout.createSequentialGroup()
@@ -659,7 +677,7 @@ public class RegisterTarea extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldNroHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrarTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -709,12 +727,12 @@ public class RegisterTarea extends javax.swing.JDialog {
 
     //Evento que se lanza al seleccionar un Item del combobox
     private void ComboBoxTipoActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxTipoActividadActionPerformed
-            indexProyecto = ComboBoxTipoActividad.getSelectedIndex();        
+            indexTipoActividad = ComboBoxTipoActividad.getSelectedIndex();        
     }//GEN-LAST:event_ComboBoxTipoActividadActionPerformed
 
     private void btnRegistrarTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarTareaActionPerformed
         if(jCheckBox1.isSelected()){
-            if("".equals(jTextFieldTarea.getText())){
+            if("".equals(jTextFieldDetaNvoPro.getText())){
             JOptionPane.showMessageDialog(this, " No puede dejar Campos Vacios \n Verifique e intente de Nuevo ");
             }else{   
                 registroTarea();
@@ -723,13 +741,17 @@ public class RegisterTarea extends javax.swing.JDialog {
                 ComboBoxEtapa.setSelectedIndex(0);
                 ComboBoxProducto.setSelectedIndex(0);
                 ComboBoxPrioridad.setSelectedIndex(0);
-                jTextFieldTarea.setText("");
+                jTextFieldDetaNvoPro.setText("");
                 jDateChooser.setDate(null);
                 jLabelRes.setText("");
                 jLabelSol.setText("");
+                jTextFieldRazonSocCli.setText("");
+                jTextFieldDetaNvoPro.setText("");
+                jTextFieldNroHoras.setText("");
+
             }
         }else{
-            if("".equals(jTextFieldTarea.getText())){
+            if("".equals(jTextFieldDetaNvoPro.getText())){
             JOptionPane.showMessageDialog(this, " No puede dejar Campos Vacios \n Verifique e intente de Nuevo ");
             }else{   
                 registroTarea();
@@ -776,9 +798,26 @@ public class RegisterTarea extends javax.swing.JDialog {
         jLabelSol.setText(getDato2());
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jTextFieldTarea1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTarea1ActionPerformed
+    private void jTextFieldDetaActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDetaActActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldTarea1ActionPerformed
+    }//GEN-LAST:event_jTextFieldDetaActActionPerformed
+
+    private void jComboBoxTipoDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTipoDiaActionPerformed
+       indexTipoDia = jComboBoxTipoDia.getSelectedIndex();
+    }//GEN-LAST:event_jComboBoxTipoDiaActionPerformed
+
+    private void jComboBoxActAscCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxActAscCliActionPerformed
+        indexActAscCli = jComboBoxActAscCli.getSelectedIndex();
+        
+        if(indexActAscCli == 2){
+            jTextFieldRazonSocCli.setVisible(false);
+            jLabel18.setVisible(false);
+        }else{
+            jTextFieldRazonSocCli.setVisible(true);
+            jLabel18.setVisible(true);
+        }
+             
+    }//GEN-LAST:event_jComboBoxActAscCliActionPerformed
 
     
     /**
@@ -860,10 +899,10 @@ public class RegisterTarea extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelRes;
     private javax.swing.JLabel jLabelSol;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextFieldTarea;
-    private javax.swing.JTextField jTextFieldTarea1;
-    private javax.swing.JTextField jTextFieldTarea2;
+    private javax.swing.JTextField jTextFieldDetaAct;
+    private javax.swing.JTextField jTextFieldDetaNvoPro;
+    private javax.swing.JTextField jTextFieldNroHoras;
+    private javax.swing.JTextField jTextFieldRazonSocCli;
     private javax.swing.JPanel jpControl;
     // End of variables declaration//GEN-END:variables
 
