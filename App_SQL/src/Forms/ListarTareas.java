@@ -1121,6 +1121,7 @@ public class ListarTareas extends javax.swing.JFrame {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         jComboBoxFestado.setSelectedIndex(0);
         jComboBoxFprioridad.setSelectedIndex(0);
+        jTextField1.setText("");
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
@@ -1132,12 +1133,10 @@ public class ListarTareas extends javax.swing.JFrame {
             ActualizarTarea Update = new ActualizarTarea(this, rootPaneCheckingEnabled);
             ActualizarTarea.jTextField1.setText(tbTablaConsulta.getValueAt(fila, 5).toString());
             ActualizarTarea.jTextField2.setText(tbTablaConsulta.getValueAt(fila, 8).toString());
-            ActualizarTarea.jTextArea1.setText(tbTablaConsulta.getValueAt(fila, 9).toString());
-            ActualizarTarea.jTextFieldTarea.setText(tbTablaConsulta.getValueAt(fila, 3).toString());
-            ActualizarTarea.jDateChooser.setDate((Date) tbTablaConsulta.getValueAt(fila, 10));
-            ActualizarTarea.txtAdjuntoName.setText((String) tbTablaConsulta.getValueAt(fila, 11));
+            ActualizarTarea.jTextFieldTarea1.setText(tbTablaConsulta.getValueAt(fila, 3).toString());
+            ActualizarTarea.jDateChooser.setDate((Date) tbTablaConsulta.getValueAt(fila, 9));
             ActualizarTarea.jLabel3.setText(tbTablaConsulta.getValueAt(fila, 0).toString());
-            ActualizarTarea.ComboBoxProyecto.setSelectedItem(tbTablaConsulta.getValueAt(fila, 2));
+            ActualizarTarea.ComboBoxTipo_Act.setSelectedItem(tbTablaConsulta.getValueAt(fila, 2));
             Update.setVisible(true);
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
@@ -1146,6 +1145,7 @@ public class ListarTareas extends javax.swing.JFrame {
         LoadData("dbo.tareas_emp","dbo.tipo_actividad","dbo.producto","dbo.etapa_tarea","dbo.estado_tarea","dbo.prioridad_tarea");
         jComboBoxFestado.setSelectedIndex(0);
         jComboBoxFprioridad.setSelectedIndex(0);
+        jTextField1.setText("");
     }//GEN-LAST:event_btnRecargarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed

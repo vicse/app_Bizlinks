@@ -689,7 +689,7 @@ public class RegisterTarea extends javax.swing.JDialog {
                     .addComponent(jTextFieldNroHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRegistrarTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRegistrarTarea)
                     .addComponent(jButton3)
                     .addComponent(jCheckBox1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -741,8 +741,8 @@ public class RegisterTarea extends javax.swing.JDialog {
 
     private void btnRegistrarTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarTareaActionPerformed
         if(jCheckBox1.isSelected()){
-            if("".equals(jTextFieldDetaNvoPro.getText())){
-            JOptionPane.showMessageDialog(this, " No puede dejar Campos Vacios \n Verifique e intente de Nuevo ");
+            if(indexActAscCli==0 || indexEstado==0 || indexEtapa==0 || indexPrioridad==0 || indexProducto==0 || indexTipoActividad==0 || indexTipoDia==0 || jTextFieldDetaAct.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this, " No puede dejar Campos Vacios \n Verifique e intente de Nuevo ");
             }else{   
                 registroTarea();
                 ComboBoxTipoActividad.setSelectedIndex(0);
@@ -760,8 +760,8 @@ public class RegisterTarea extends javax.swing.JDialog {
 
             }
         }else{
-            if("".equals(jTextFieldDetaNvoPro.getText())){
-            JOptionPane.showMessageDialog(this, " No puede dejar Campos Vacios \n Verifique e intente de Nuevo ");
+            if(indexActAscCli==0 || indexEstado==0 || indexEtapa==0 || indexPrioridad==0 || indexProducto==0 || indexTipoActividad==0 || indexTipoDia==0 || jTextFieldDetaAct.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this, "No puede dejar Campos Vacios \n Verifique e intente de Nuevo ");
             }else{   
                 registroTarea();
                 this.dispose();
@@ -788,6 +788,14 @@ public class RegisterTarea extends javax.swing.JDialog {
     
     private void ComboBoxProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxProductoActionPerformed
         indexProducto= ComboBoxProducto.getSelectedIndex();
+        
+        if(indexProducto == 4){
+            jLabel10.setVisible(true);
+            jTextFieldDetaNvoPro.setVisible(true);
+        }else{
+            jLabel10.setVisible(false);
+            jTextFieldDetaNvoPro.setVisible(false);
+        }
     }//GEN-LAST:event_ComboBoxProductoActionPerformed
 
     private void ComboBoxEtapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxEtapaActionPerformed
