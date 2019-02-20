@@ -236,7 +236,7 @@ public class ActualizarTarea extends javax.swing.JDialog {
         btnClose = new javax.swing.JLabel();
         ipmLogoLeft = new gui.ImagePanel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabelIdTarea = new javax.swing.JLabel();
         impRegister = new gui.ImagePanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -255,12 +255,12 @@ public class ActualizarTarea extends javax.swing.JDialog {
         jDateChooser = new com.toedter.calendar.JDateChooser();
         jLabel15 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        jTextFieldRes = new javax.swing.JTextField();
+        jTextFieldSol = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jTextFieldTarea1 = new javax.swing.JTextField();
+        jTextFieldDetalleAct = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
@@ -339,8 +339,8 @@ public class ActualizarTarea extends javax.swing.JDialog {
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Actualizar Tarea");
 
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("ID tarea");
+        jLabelIdTarea.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelIdTarea.setText("ID tarea");
 
         javax.swing.GroupLayout jpControlLayout = new javax.swing.GroupLayout(jpControl);
         jpControl.setLayout(jpControlLayout);
@@ -352,7 +352,7 @@ public class ActualizarTarea extends javax.swing.JDialog {
                 .addGap(5, 5, 5)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
+                .addComponent(jLabelIdTarea)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 300, Short.MAX_VALUE)
                 .addComponent(bgClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8))
@@ -370,7 +370,7 @@ public class ActualizarTarea extends javax.swing.JDialog {
                             .addComponent(ipmLogoLeft, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jpControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3)))))
+                                .addComponent(jLabelIdTarea)))))
                 .addGap(8, 8, 8))
         );
 
@@ -447,9 +447,9 @@ public class ActualizarTarea extends javax.swing.JDialog {
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("Solicitado por *");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldRes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTextFieldResActionPerformed(evt);
             }
         });
 
@@ -515,7 +515,7 @@ public class ActualizarTarea extends javax.swing.JDialog {
                 .addGap(15, 15, 15)
                 .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(impRegisterLayout.createSequentialGroup()
-                        .addComponent(jTextFieldTarea1)
+                        .addComponent(jTextFieldDetalleAct)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, impRegisterLayout.createSequentialGroup()
                         .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -543,7 +543,7 @@ public class ActualizarTarea extends javax.swing.JDialog {
                                     .addComponent(ComboBoxEtapa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(143, 143, 143)
                                 .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1)
+                                    .addComponent(jTextFieldRes)
                                     .addGroup(impRegisterLayout.createSequentialGroup()
                                         .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(ComboBoxPrioridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -573,7 +573,7 @@ public class ActualizarTarea extends javax.swing.JDialog {
                             .addComponent(jLabel4)
                             .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel17)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldSol, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         impRegisterLayout.setVerticalGroup(
@@ -612,7 +612,7 @@ public class ActualizarTarea extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldTarea1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldDetalleAct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
@@ -635,8 +635,8 @@ public class ActualizarTarea extends javax.swing.JDialog {
                     .addComponent(jLabel15))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldSol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(49, 49, 49)
                 .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -716,9 +716,9 @@ public class ActualizarTarea extends javax.swing.JDialog {
         indexPrioridad = ComboBoxPrioridad.getSelectedIndex();
     }//GEN-LAST:event_ComboBoxPrioridadActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jTextFieldResActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldResActionPerformed
 
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jTextFieldResActionPerformed
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int i = JOptionPane.showConfirmDialog(this, "Seguro de actualizar estos datos?", "Confirmar Actualizacion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -728,7 +728,7 @@ public class ActualizarTarea extends javax.swing.JDialog {
             if(indexActAscCli==0 || indexEstado==0 || indexEtapa==0 || indexPrioridad==0 || indexProducto==0 || indexProyecto==0 || indexTipoDia==0){
                 JOptionPane.showMessageDialog(null, "No puede dejar Campos Vacios \n Verifique e intente de Nuevo ");
             }else{
-                UpdateDB("dbo.tareas_emp",jTextFieldTarea1.getText(),sqlDate, jTextField1.getText(),jTextField2.getText(),indexEtapa, indexProyecto, indexPrioridad, indexProducto, indexEstado,indexTipoDia,indexActAscCli, jTextFieldRaSocialCli.getText(), jTextFieldDetaNvoPro.getText(),jTextFieldNroHoras.getText(), CapturarFecha(sqlDate), Integer.parseInt(jLabel3.getText()));
+                UpdateDB("dbo.tareas_emp",jTextFieldDetalleAct.getText(),sqlDate, jTextFieldRes.getText(),jTextFieldSol.getText(),indexEtapa, indexProyecto, indexPrioridad, indexProducto, indexEstado,indexTipoDia,indexActAscCli, jTextFieldRaSocialCli.getText(), jTextFieldDetaNvoPro.getText(),jTextFieldNroHoras.getText(), CapturarFecha(sqlDate), Integer.parseInt(jLabelIdTarea.getText()));
             }
         }
 
@@ -833,17 +833,17 @@ public class ActualizarTarea extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    public static javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel9;
+    public static javax.swing.JLabel jLabelIdTarea;
     private javax.swing.JSeparator jSeparator1;
-    public static javax.swing.JTextField jTextField1;
-    public static javax.swing.JTextField jTextField2;
     public static javax.swing.JTextField jTextFieldDetaNvoPro;
-    private javax.swing.JTextField jTextFieldNroHoras;
-    private javax.swing.JTextField jTextFieldRaSocialCli;
-    public static javax.swing.JTextField jTextFieldTarea1;
+    public static javax.swing.JTextField jTextFieldDetalleAct;
+    public static javax.swing.JTextField jTextFieldNroHoras;
+    public static javax.swing.JTextField jTextFieldRaSocialCli;
+    public static javax.swing.JTextField jTextFieldRes;
+    public static javax.swing.JTextField jTextFieldSol;
     private javax.swing.JPanel jpControl;
     // End of variables declaration//GEN-END:variables
 }

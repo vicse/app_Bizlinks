@@ -1,17 +1,21 @@
 package Forms;
 
 import Classes.Conexion;
+import Classes.ExportarExcel;
+
 import com.sun.awt.AWTUtilities;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
+import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -52,13 +56,13 @@ public class ListarTareas extends javax.swing.JFrame {
         impLista.setImage(new ImageIcon(getClass().getResource("/Resources/Titles.png")).getImage());
         ipmLogoLeft.setImage(new ImageIcon(getClass().getResource("/Resources/icon_250.png")).getImage());
         imp_main.setImage(new ImageIcon(getClass().getResource("/Resources/fond_main.png")).getImage());
-        String[] columns = new String[]{"ID", "TIPO_ACTIVIDAD", "PRODUCTO", "DETALLE ACTIVIDAD","ETAPA", "ASIGNADO", "ESTADO", "PRIORIDAD","SOLICITADO","ENTREGA"};
+        String[] columns = new String[]{"ID","ENTREGA","TIPO_DIA", "ASIGNADO", "TIPO_ACTIVIDAD","ACTIVIDAD_ASOCIADA","RAZON_SOCIAL_CLIENTE", "PRODUCTO","DETALLE_NVO_PRODUCTO", "DETALLE_ACTIVIDAD","N° DE HORAS","ETAPA", "ESTADO", "PRIORIDAD","SOLICITADO POR"};
         ModeloTablaConsulta.setColumnIdentifiers(columns);
         tbTablaConsulta.setModel(ModeloTablaConsulta);
         StyleTable();
         Shape redondear = new RoundRectangle2D.Double(0, 0, this.getBounds().width, this.getBounds().height, 6, 6);
         AWTUtilities.setWindowShape(this, redondear);       
-        LoadData("dbo.tareas_emp","dbo.tipo_actividad","dbo.producto","dbo.etapa_tarea","dbo.estado_tarea","dbo.prioridad_tarea");        
+        LoadData("dbo.tareas_emp","dbo.tipo_actividad","dbo.producto","dbo.etapa_tarea","dbo.estado_tarea","dbo.prioridad_tarea","dbo.tipo_dia_tarea","dbo.act_asoc_cliente");        
     }
     
     /*--------------------------------FUNCIONES-----------------------------------------*/
@@ -70,25 +74,34 @@ public class ListarTareas extends javax.swing.JFrame {
      * @param t4 NOmbre de la tabla para realizar JOIN
      * @param t5 NOmbre de la table para realizar JOIN
      * @param t6 NOmbre de la table para realizar JOIN
+     * @param t7
+     * @param t8
      */
-    public void LoadData(String table,String t2,String t3, String t4, String t5, String t6){
+    public void LoadData(String table,String t2,String t3, String t4, String t5, String t6, String t7, String t8){
         CleanData();
         try {
             PreparedStatement ps = con.getConnection().prepareStatement("Select id_tarea\n" +
-            ", tipo_actividad.tipo_actividad\n" +
-            ", producto.producto\n" +
-            ", detalle_actividad\n" +
-            ", etapa_tarea.etapa\n" +
+            ", fecha_entrega\n" +
+            ", tipo_dia_tarea.tipo_dia\n" +
             ", COALESCE(responsable, '')\n" +
+            ", tipo_actividad.tipo_actividad\n" +
+            ", act_asoc_cliente.act_asc_cliente\n" +
+            ", razon_social_cliente\n" +
+            ", producto.producto\n" +
+            ", detalle_nuevo_producto\n" +
+            ", detalle_actividad\n" +
+            ", numero_horas\n" +
+            ", etapa_tarea.etapa\n" +            
             ", estado_tarea.estado\n" +
             ", prioridad_tarea.prioridad\n" +
-            ", COALESCE(solicitado, '')\n" +
-            ", fecha_entrega FROM "+table+
+            ", COALESCE(solicitado, '') FROM "+table+
             " INNER JOIN "+t2+" ON "+t2+".id_tipo_actividad="+table+".nombre_tipo_actividad"+
             " INNER JOIN "+t3+" ON "+t3+".id_producto="+table+".nombre_producto"+
             " INNER JOIN "+t4+" ON "+t4+".id_etapa="+table+".nombre_etapa"+
             " INNER JOIN "+t5+" ON "+t5+".id_estado="+table+".nombre_estado"+
             " INNER JOIN "+t6+" ON "+t6+".id_prioridad_tarea="+table+".nombre_prioridad"+
+            " INNER JOIN "+t7+" ON "+t7+".id_tipo_dia="+table+".nombre_tipo_dia"+
+            " INNER JOIN "+t8+" ON "+t8+".id_act_asc_cli="+table+".nombre_act_asoc_cliente"+ 
             " ORDER BY id_tarea ASC");
             ResultSet r = ps.executeQuery();
             ResultSetMetaData datos = r.getMetaData();
@@ -160,7 +173,8 @@ public class ListarTareas extends javax.swing.JFrame {
         HeadTable.setBackground(new Color(171, 173, 166));
         HeadTable.setForeground(new Color(0,0,0));
         HeadTable.setPreferredSize(new Dimension(scTable.getWidth(),25));
-        tbTablaConsulta.getColumnModel().getColumn(1).setMinWidth(200);
+        tbTablaConsulta.getColumnModel().getColumn(0).setMinWidth(20);
+        tbTablaConsulta.getColumnModel().getColumn(1).setMinWidth(40);
         for (int i = 0; i < tbTablaConsulta.getModel().getColumnCount(); i++) {
             tbTablaConsulta.getColumnModel().getColumn(i).setHeaderRenderer(HeadTable);
             tbTablaConsulta.getColumnModel().getColumn(i).setMinWidth(30);
@@ -208,25 +222,32 @@ public class ListarTareas extends javax.swing.JFrame {
 //        }
 //    }
 
-    public void FilterDB(String table,String t2, String t3, String t4, String t5, String t6,String column,String filter){
+    public void FilterDB(String table,String t2, String t3, String t4, String t5, String t6,String t7,String t8,String column,String filter){
         CleanData();
         try {
             
             PreparedStatement psm = con.getConnection().prepareStatement("Select id_tarea\n" +
-            ", tipo_actividad.tipo_actividad\n" +
-            ", producto.producto\n" +
-            ", detalle_actividad\n" +
-            ", etapa_tarea.etapa\n" +
+            ", fecha_entrega\n" +
+            ", tipo_dia_tarea.tipo_dia\n" +
             ", COALESCE(responsable, '')\n" +
+            ", tipo_actividad.tipo_actividad\n" +
+            ", act_asoc_cliente.act_asc_cliente\n" +
+            ", razon_social_cliente\n" +
+            ", producto.producto\n" +
+            ", detalle_nuevo_producto\n" +
+            ", detalle_actividad\n" +
+            ", numero_horas\n" +
+            ", etapa_tarea.etapa\n" +       
             ", estado_tarea.estado\n" +
             ", prioridad_tarea.prioridad\n" +
-            ", COALESCE(solicitado, '')\n" +
-            ", fecha_entrega FROM "+table+
+            ", COALESCE(solicitado, '') FROM "+table+
             " INNER JOIN "+t2+" ON "+t2+".id_tipo_actividad="+table+".nombre_tipo_actividad"+
             " INNER JOIN "+t3+" ON "+t3+".id_producto="+table+".nombre_producto"+
             " INNER JOIN "+t4+" ON "+t4+".id_etapa="+table+".nombre_etapa"+
             " INNER JOIN "+t5+" ON "+t5+".id_estado="+table+".nombre_estado"+
             " INNER JOIN "+t6+" ON "+t6+".id_prioridad_tarea="+table+".nombre_prioridad"+
+            " INNER JOIN "+t7+" ON "+t7+".id_tipo_dia="+table+".nombre_tipo_dia"+
+            " INNER JOIN "+t8+" ON "+t8+".id_act_asc_cli="+table+".nombre_act_asoc_cliente"+    
             " WHERE "+ column +" LIKE '"+filter+"%'"+
             "ORDER BY id_tarea ASC");
             
@@ -302,6 +323,7 @@ public class ListarTareas extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         btnBuscar2 = new javax.swing.JButton();
+        btnExportarExcel = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btnActualizar = new javax.swing.JButton();
         btnRecargar = new javax.swing.JButton();
@@ -424,6 +446,17 @@ public class ListarTareas extends javax.swing.JFrame {
             }
         });
 
+        btnExportarExcel.setBackground(new java.awt.Color(0, 153, 51));
+        btnExportarExcel.setForeground(new java.awt.Color(255, 255, 255));
+        btnExportarExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icon_excel.png"))); // NOI18N
+        btnExportarExcel.setText("Exportar a Excel");
+        btnExportarExcel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnExportarExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarExcelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -441,10 +474,16 @@ public class ListarTareas extends javax.swing.JFrame {
                     .addComponent(btnBuscar1))
                 .addGap(109, 109, 109)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBuscar2)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(298, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnExportarExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscar2))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(scTable))
@@ -452,11 +491,16 @@ public class ListarTareas extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel14))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel14)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnExportarExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxFprioridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1131,30 +1175,32 @@ public class ListarTareas extends javax.swing.JFrame {
         } else {
 
             ActualizarTarea Update = new ActualizarTarea(this, rootPaneCheckingEnabled);
-            ActualizarTarea.jTextField1.setText(tbTablaConsulta.getValueAt(fila, 5).toString());
-            ActualizarTarea.jTextField2.setText(tbTablaConsulta.getValueAt(fila, 8).toString());
-            ActualizarTarea.jTextFieldTarea1.setText(tbTablaConsulta.getValueAt(fila, 3).toString());
-            ActualizarTarea.jDateChooser.setDate((Date) tbTablaConsulta.getValueAt(fila, 9));
-            ActualizarTarea.jLabel3.setText(tbTablaConsulta.getValueAt(fila, 0).toString());
-            ActualizarTarea.ComboBoxTipo_Act.setSelectedItem(tbTablaConsulta.getValueAt(fila, 2));
+            ActualizarTarea.jTextFieldRes.setText(tbTablaConsulta.getValueAt(fila, 3).toString());
+            ActualizarTarea.jTextFieldSol.setText(tbTablaConsulta.getValueAt(fila, 14).toString());
+            ActualizarTarea.jTextFieldDetalleAct.setText(tbTablaConsulta.getValueAt(fila, 9).toString());
+            ActualizarTarea.jTextFieldDetaNvoPro.setText(tbTablaConsulta.getValueAt(fila, 8).toString());
+            ActualizarTarea.jDateChooser.setDate((Date) tbTablaConsulta.getValueAt(fila, 1));
+            ActualizarTarea.jTextFieldNroHoras.setText(tbTablaConsulta.getValueAt(fila, 10).toString());
+            ActualizarTarea.jTextFieldRaSocialCli.setText(tbTablaConsulta.getValueAt(fila, 6).toString());
+            ActualizarTarea.jLabelIdTarea.setText(tbTablaConsulta.getValueAt(fila, 0).toString());
             Update.setVisible(true);
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnRecargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarActionPerformed
-        LoadData("dbo.tareas_emp","dbo.tipo_actividad","dbo.producto","dbo.etapa_tarea","dbo.estado_tarea","dbo.prioridad_tarea");
+        LoadData("dbo.tareas_emp","dbo.tipo_actividad","dbo.producto","dbo.etapa_tarea","dbo.estado_tarea","dbo.prioridad_tarea","dbo.tipo_dia_tarea","dbo.act_asoc_cliente");
         jComboBoxFestado.setSelectedIndex(0);
         jComboBoxFprioridad.setSelectedIndex(0);
         jTextField1.setText("");
     }//GEN-LAST:event_btnRecargarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        FilterDB("dbo.tareas_emp","dbo.tipo_actividad","dbo.producto","dbo.etapa_tarea","dbo.estado_tarea","dbo.prioridad_tarea","prioridad_tarea.prioridad", filterPrioridad);
+        FilterDB("dbo.tareas_emp","dbo.tipo_actividad","dbo.producto","dbo.etapa_tarea","dbo.estado_tarea","dbo.prioridad_tarea","dbo.tipo_dia_tarea","dbo.act_asoc_cliente","prioridad_tarea.prioridad", filterPrioridad);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
 
-        FilterDB("dbo.tareas_emp","dbo.tipo_actividad","dbo.producto","dbo.etapa_tarea","dbo.estado_tarea","dbo.prioridad_tarea","estado_tarea.estado", filterEstado);
+        FilterDB("dbo.tareas_emp","dbo.tipo_actividad","dbo.producto","dbo.etapa_tarea","dbo.estado_tarea","dbo.prioridad_tarea","dbo.tipo_dia_tarea","dbo.act_asoc_cliente","estado_tarea.estado", filterEstado);
     }//GEN-LAST:event_btnBuscar1ActionPerformed
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
@@ -1163,12 +1209,12 @@ public class ListarTareas extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel10MouseClicked
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-         RegisterTarea registerTarea = new RegisterTarea(this, rootPaneCheckingEnabled);
-         registerTarea.setVisible(true);
+        RegisterTarea registerTarea = new RegisterTarea(this, rootPaneCheckingEnabled);
+        registerTarea.setVisible(true);
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void btnIngresarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnIngresarKeyPressed
-
+        
     }//GEN-LAST:event_btnIngresarKeyPressed
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
@@ -1210,8 +1256,26 @@ public class ListarTareas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar2ActionPerformed
-        FilterDB("dbo.tareas_emp","dbo.tipo_actividad","dbo.producto","dbo.etapa_tarea","dbo.estado_tarea","dbo.prioridad_tarea","periodo_declarar", jTextField1.getText());
+        FilterDB("dbo.tareas_emp","dbo.tipo_actividad","dbo.producto","dbo.etapa_tarea","dbo.estado_tarea","dbo.prioridad_tarea","dbo.tipo_dia_tarea","dbo.act_asoc_cliente","periodo_declarar", jTextField1.getText());
     }//GEN-LAST:event_btnBuscar2ActionPerformed
+
+    void impresion(){
+        JFileChooser seleccionar = new JFileChooser();
+        File archivo;
+        if (seleccionar.showDialog(null, "Exportar Excel") == JFileChooser.APPROVE_OPTION) {
+            archivo = seleccionar.getSelectedFile();
+            String imagen = archivo + ".xls";
+            File file = new File(imagen);
+            ExportarExcel excel = new ExportarExcel(tbTablaConsulta, file, "" + "Importe Tareas");
+            excel.export(); 
+        }
+    }
+    
+       
+    private void btnExportarExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarExcelActionPerformed
+          impresion(); 
+          tbTablaConsulta.getColumnName(1);
+    }//GEN-LAST:event_btnExportarExcelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1256,6 +1320,7 @@ public class ListarTareas extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar2;
     private javax.swing.JLabel btnClose;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnExportarExcel;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JLabel btnMinimize;
