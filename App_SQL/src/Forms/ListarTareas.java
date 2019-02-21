@@ -446,8 +446,8 @@ public class ListarTareas extends javax.swing.JFrame {
             }
         });
 
-        btnExportarExcel.setBackground(new java.awt.Color(0, 153, 51));
-        btnExportarExcel.setForeground(new java.awt.Color(255, 255, 255));
+        btnExportarExcel.setBackground(new java.awt.Color(200, 255, 255));
+        btnExportarExcel.setForeground(new java.awt.Color(0, 153, 0));
         btnExportarExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icon_excel.png"))); // NOI18N
         btnExportarExcel.setText("Exportar a Excel");
         btnExportarExcel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
