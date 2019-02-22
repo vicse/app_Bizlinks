@@ -83,7 +83,7 @@ public class RegisterTarea extends javax.swing.JDialog {
         try{
             //Verificamos si la infoAdicional esta vacia y realizamos el registro con los campos en null
             
-            if("".equals(getDato1()) || "".equals(getDato2()) || "".equals(getDato3())){
+            if("".equals(getDato1()) || "".equals(getDato2())){
                 PreparedStatement ps = con.getConnection().prepareStatement("INSERT INTO dbo.tareas_emp (detalle_actividad,fecha_entrega,responsable,solicitado,nombre_etapa,nombre_tipo_actividad,nombre_prioridad,nombre_producto,nombre_estado,nombre_tipo_dia,nombre_act_asoc_cliente,razon_social_cliente,detalle_nuevo_producto,numero_horas,periodo_declarar) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             
                 sqlDate = new Date(jDateChooser.getDate().getTime());
@@ -111,7 +111,7 @@ public class RegisterTarea extends javax.swing.JDialog {
             
                 sqlDate = new Date(jDateChooser.getDate().getTime());
 
-                ps.setString(1, jTextFieldDetaNvoPro.getText());
+                ps.setString(1, jTextFieldDetaAct.getText());
                 ps.setDate(2, sqlDate);
                 ps.setString(3, getDato1());
                 ps.setString(4, getDato2());
@@ -562,8 +562,8 @@ public class RegisterTarea extends javax.swing.JDialog {
                         .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel18)
                             .addComponent(jLabel11)
-                            .addComponent(ComboBoxTipoActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(56, 56, 56))
+                            .addComponent(ComboBoxTipoActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(38, 38, 38))
                     .addGroup(impRegisterLayout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addGroup(impRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -745,6 +745,10 @@ public class RegisterTarea extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, " No puede dejar Campos Vacios \n Verifique e intente de Nuevo ");
             }else{   
                 registroTarea();
+                //Seteamos las variables que trean los datos del formAdicional vacios
+                setDato1("");
+                setDato2("");
+                //Seteamos el form todo vacio para registrar otra tarea
                 ComboBoxTipoActividad.setSelectedIndex(0);
                 ComboBoxEstado.setSelectedIndex(0);
                 ComboBoxEtapa.setSelectedIndex(0);
@@ -764,6 +768,9 @@ public class RegisterTarea extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "No puede dejar Campos Vacios \n Verifique e intente de Nuevo ");
             }else{   
                 registroTarea();
+                //Seteamos las variables que trean los datos del formAdicional vacios
+                setDato1("");
+                setDato2("");
                 this.dispose();
             }
         }
@@ -776,6 +783,8 @@ public class RegisterTarea extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        setDato1("");
+        setDato2("");
         this.dispose();
     }//GEN-LAST:event_jButton3MouseClicked
 

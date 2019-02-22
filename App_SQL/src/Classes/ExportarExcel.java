@@ -32,21 +32,24 @@ private final String nombreTab; //nombre del archivo
                 //create format for header cells
                 WritableCellFormat headerCellFormat = new WritableCellFormat(headerCellFont);
                 
-                Label headerCell1 = new Label(0, 0, "ID", headerCellFormat);
-                Label headerCell2 = new Label(1, 0, "ENTREGA", headerCellFormat);
-		Label headerCell3 = new Label(2, 0, "TIPO_DIA", headerCellFormat);
-                Label headerCell4 = new Label(3, 0, "ASIGNADO", headerCellFormat);
-                Label headerCell5 = new Label(4, 0, "TIPO_ACTIVIDAD", headerCellFormat);
-                Label headerCell6 = new Label(5, 0, "ACTIVIDAD_ASOCIADA", headerCellFormat);                
-                Label headerCell7 = new Label(6, 0, "RAZON_SOCIAL_CLIENTE", headerCellFormat);
-                Label headerCell8 = new Label(7, 0, "PRODUCTO", headerCellFormat);
-                Label headerCell9 = new Label(8, 0, "DETALLE_NVO_PRODUCTO", headerCellFormat);
-                Label headerCell10 = new Label(9, 0, "DETALLE_ACTIVIDAD", headerCellFormat);
-                Label headerCell11 = new Label(10, 0, "N° DE HORAS", headerCellFormat);
-                Label headerCell12 = new Label(11, 0, "ETAPA", headerCellFormat);
+                 // Solo colocamos los encabezados
+                
+                Label headerCell1 = new Label(0, 0, "N° de Tarea", headerCellFormat);
+                Label headerCell2 = new Label(1, 0, "Fecha de la actividad", headerCellFormat);
+		Label headerCell3 = new Label(2, 0, "Tipo de dia", headerCellFormat);
+                Label headerCell4 = new Label(3, 0, "Trabajador", headerCellFormat);
+                Label headerCell5 = new Label(4, 0, "Tipo actividad", headerCellFormat);
+                Label headerCell6 = new Label(5, 0, "La actividad esta asociada para un cliente específico", headerCellFormat);                
+                    Label headerCell7 = new Label(6, 0, "Razon social del cliente", headerCellFormat);
+                Label headerCell8 = new Label(7, 0, "Producto", headerCellFormat);
+                Label headerCell9 = new Label(8, 0, "Detalle del nuevo producto", headerCellFormat);
+                Label headerCell10 = new Label(9, 0, "Detalle de la actividad", headerCellFormat);
+                Label headerCell11 = new Label(10, 0, "N° de Horas", headerCellFormat);
+               
+                /*Label headerCell12 = new Label(11, 0, "ETAPA", headerCellFormat);
                 Label headerCell13 = new Label(12, 0, "ESTADO", headerCellFormat);
                 Label headerCell14 = new Label(13, 0, "PRIORIDAD", headerCellFormat);
-                Label headerCell15 = new Label(14, 0, "SOLICITADO POR", headerCellFormat);
+                Label headerCell15 = new Label(14, 0, "SOLICITADO POR", headerCellFormat);*/
                                                               
                 s.addCell(headerCell1);
                 s.addCell(headerCell2);
@@ -59,15 +62,16 @@ private final String nombreTab; //nombre del archivo
                 s.addCell(headerCell9);
                 s.addCell(headerCell10);
                 s.addCell(headerCell11);
-                s.addCell(headerCell12);
+                /*s.addCell(headerCell12);
                 s.addCell(headerCell13);
                 s.addCell(headerCell14);
-                s.addCell(headerCell15);
+                s.addCell(headerCell15); */
                 
                 //ocupamos dos ciclos para recorrer nuestra tabla y escribir en las celdas de excel
                 System.out.print("recorriendo la tabla");
                 for(int i=1;i< table.getRowCount();i++){
-                    for(int j=0;j<table.getColumnCount();j++){
+                    //Se indica el número de la columna final a exportar
+                    for(int j=0;j<11;j++){
                         Object objeto=table.getValueAt(i,j);
                         s.addCell(new Label(j, i, String.valueOf(objeto)));
                     }
